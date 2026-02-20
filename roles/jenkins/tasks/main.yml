@@ -1,0 +1,28 @@
+- name: Install required dependencies
+  apt:
+    name:
+      - openjdk-17-jdk
+      - curl
+    state: present
+    update_cache: yes
+
+- name: Download Jenkins .deb package
+  get_url:
+    url: https://pkg.jenkins.io/debian-stable/binary/jenkins_2.440.1_all.deb
+    dest: /tmp/jenkins.deb
+
+- name: Install Jenkins package
+  apt:
+    deb: /tmp/jenkins.deb
+
+- name: Start and enable Jenkins
+  service:
+    name: jenkins
+    state: started
+    enabled: yes
+
+- name: Add jenkins user to docker group
+  user:
+    name: jenkins
+    groups: docker
+    append: yes

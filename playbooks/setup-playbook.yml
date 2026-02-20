@@ -1,0 +1,8 @@
+- name: Setup DevOps Server
+  hosts: jenkins
+  become: true
+
+  roles:
+    - docker
+    - jenkins
+    - trivy

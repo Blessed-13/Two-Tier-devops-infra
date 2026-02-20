@@ -1,0 +1,28 @@
+- name: Install required packages for Trivy
+  apt:
+    name:
+      - gnupg
+      - curl
+    state: present
+    update_cache: yes
+
+- name: Add Trivy GPG key
+  shell: |
+    curl -fsSL https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor -o /usr/share/keyrings/trivy.gpg
+  args:
+    creates: /usr/share/keyrings/trivy.gpg
+
+- name: Add Trivy repository
+  apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb {{ ansible_distribution_release }} main"
+    state: present
+    filename: trivy
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install Trivy
+  apt:
+    name: trivy
+    state: present
