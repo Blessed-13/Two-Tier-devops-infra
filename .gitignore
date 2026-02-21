@@ -1,0 +1,17 @@
+# SSH Keys
+*.pem
+*.key
+
+# Ansible retry files
+*.retry
+
+# Ansible logs
+ansible.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# VSCode
+.vscode/
+
