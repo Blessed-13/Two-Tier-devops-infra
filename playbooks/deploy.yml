@@ -1,0 +1,14 @@
+- name: Deploy latest Docker image to App Server
+  hosts: app
+  become: true
+
+  tasks:
+    - name: Pull latest images
+      shell: docker compose pull
+      args:
+        chdir: /opt/Two-Tier-Flask-Application
+
+    - name: Restart containers
+      shell: docker compose up -d
+      args:
+        chdir: /opt/Two-Tier-Flask-Application

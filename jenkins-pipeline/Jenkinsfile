@@ -1,0 +1,13 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Deploy to App Server') {
+            steps {
+                sshagent(['ec2-key']) {
+                    sh 'ansible-playbook -i inventory playbooks/deploy.yml'
+                }
+            }
+        }
+    }
+}
